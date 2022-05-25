@@ -29,7 +29,7 @@ class GoodsList {
 
   result() {
     let result = this.goods.reduce((previous, sum) => previous + sum.price, 0);
-    console.log(result);
+    console.log(`Общая цена товаров составила: ${result} рублей.`);
   }
 
   render() {
