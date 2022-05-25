@@ -1,21 +1,23 @@
 header {
+  background-color: #222222;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }
 
 header .cart-button {
-  margin-bottom: 20px;
+  background-color: #4e292e;
   align-self: center;
-  border: 1px solid #FF6A6A;
+  border: none;
   font-size: 16px;
   line-height: 19px;
-  color: #F26376;
+  color: #f9f8f8;
   padding: 14.5px 38.5px;
 }
 
 .goods-list {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
 }
