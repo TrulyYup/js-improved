@@ -1,6 +1,18 @@
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API_URL_BASKET = `${API_URL}/getBasket.json`;
+
+function service(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.send();
+  xhr.onload = () => {
+    callback(JSON.parse(xhr.response));
+  }
+};
+
 class GoodsItem {
-  constructor({ title = '', price = 0 }) {
-    this.title = title;
+  constructor({ product_name = '', price = 0 }) {
+    this.title = product_name;
     this.price = price;
   }
   render() {
@@ -17,20 +29,18 @@ class GoodsItem {
 class GoodsList {
   constructor() {
     this.goods = [];
-  }
-  fetchGoods() {
-    this.goods = [
-      { title: 'Shirt', price: 150 },
-      { title: 'Socks', price: 50 },
-      { title: 'Jacket', price: 350 },
-      { title: 'Shoes', price: 250 },
-    ];
-  }
+  };
+  fetchGoods(callback) {
+    service(`${API_URL}/catalogData.json`, (goods) => {
+      this.goods = goods;
+      callback();
+    })
+  };
 
   result() {
     let result = this.goods.reduce((previous, sum) => previous + sum.price, 0);
     console.log(`Общая цена товаров составила: ${result} рублей.`);
-  }
+  };
 
   render() {
     let listHtml = '';
@@ -39,10 +49,24 @@ class GoodsList {
       listHtml += goodItem.render();
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
+  };
+};
+
+class GoodsBusket {
+  goods = [];
+  fetchGoods(callback = () => { }) {
+    service(API_URL_BASKET, (goods) => {
+      this.goods = goods;
+      callback();
+    })
   }
-}
+};
+
+const busket = new GoodsBusket();
+busket.fetchGoods();
 
 const list = new GoodsList();
-list.fetchGoods();
-list.render();
-list.result();
+list.fetchGoods(() => {
+  list.render();
+  list.result();
+});
