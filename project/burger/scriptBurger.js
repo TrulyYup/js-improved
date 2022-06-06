@@ -22,12 +22,12 @@ const toppingSeed = { param: 'Топпинг с приправой', price: 15, 
 const toppingMayonnaise = { param: 'Топпинг с майонезом', price: 20, calories: 5 };
 
 class Hamburger {
-    constructor(size, stuffing, topping = 0) {
+    constructor(size, stuffing, topping = {}) {
         this.size = size;
         this.stuffing = stuffing;
         this.topping = topping;
     }
-    addTopping(topping) { // Добавить добавку 
+    addTopping(topping) { // Добавить добавку
 
     }
     removeTopping(topping) { // Убрать добавку 
@@ -55,9 +55,10 @@ class Hamburger {
         console.log(`Калорийность бургера ${calories}`);
     };
 };
-const burger = new Hamburger(smallBurger, stuffingCheese);
+const burger = new Hamburger(smallBurger, stuffingCheese, toppingMayonnaise);
 burger.calculateCalories();
 burger.calculatePrice();
 burger.getToppings();
 burger.getSize();
 burger.getStuffing();
+burger.addTopping();
