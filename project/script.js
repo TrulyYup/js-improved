@@ -1,13 +1,8 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 const API_URL_BASKET = `${API_URL}/getBasket.json`;
 
-function service(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.send();
-  xhr.onload = () => {
-    callback(JSON.parse(xhr.response));
-  }
+function service(url) {
+  return fetch(url).then((res) => res.json());
 };
 
 class GoodsItem {
@@ -29,12 +24,21 @@ class GoodsItem {
 class GoodsList {
   constructor() {
     this.goods = [];
+    this.filteredGoods = [];
   };
-  fetchGoods(callback) {
-    service(`${API_URL}/catalogData.json`, (goods) => {
-      this.goods = goods;
-      callback();
+
+  filterGoods(value) {
+    this.filteredGoods = this.goods.filter(({ product_name }) => {
+      return product_name.match(new RegExp(value, "gui"));
     })
+  }
+
+  fetchGoods() {
+    return service(`${API_URL}/catalogData.json`).then((goods) => {
+      this.goods = goods;
+      this.filteredGoods = goods;
+      return goods;
+    });
   };
 
   result() {
@@ -44,14 +48,13 @@ class GoodsList {
 
   render() {
     let listHtml = '';
-    this.goods.map(list => {
+    this.filteredGoods.map(list => {
       const goodItem = new GoodsItem(list);
       listHtml += goodItem.render();
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
   };
 };
-
 class GoodsBusket {
   goods = [];
   fetchGoods(callback = () => { }) {
@@ -66,7 +69,14 @@ const busket = new GoodsBusket();
 busket.fetchGoods();
 
 const list = new GoodsList();
-list.fetchGoods(() => {
+list.fetchGoods().then(() => {
   list.render();
   list.result();
+})
+
+const searchButton = document.querySelector('.search-button');
+searchButton.addEventListener('click', (e) => {
+  let value = document.querySelector('.goods-search').value;
+  list.filterGoods(value);
+  list.render();
 });

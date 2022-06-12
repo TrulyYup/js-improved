@@ -1,11 +1,53 @@
-header {
-  background-color: #6d6d6d;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-header .cart-button {
+header {
+  height: 70px;
+  background-color: #6d6d6d;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+header h1 {
+  color: #f9f8f8;
+  height: 30px;
+  font-weight: bold;
+  justify-self: start;
+}
+
+header .header_right {
+  display: flex;
+}
+
+header .header_right label {
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  padding-right: 20px;
+}
+
+header .header_right label input {
+  height: inherit;
+  padding: 0 0 0 4px;
+  border-width: 0;
+}
+
+header .header_right label button {
+  height: inherit;
+  background-color: #4e292e;
+  align-self: center;
+  border: none;
+  font-size: 16px;
+  line-height: 19px;
+  color: #f9f8f8;
+  padding: 14.5px 38.5px;
+}
+
+header .header_right .cart-button {
   background-color: #4e292e;
   align-self: center;
   border: none;
