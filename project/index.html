@@ -19,11 +19,8 @@
             <div class="header_wrap">
                <h1>TrulyShop</h1>
                <div class="header_right">
-                  <label>
-                     <input class="goods-search" type="text" v-model="searchValue">
-                     <!-- <button class="search-button" type="button">Найти</button> -->
-                  </label>
-                  <button class="cart-button" type="button" @click="setVisibleCart">Cart</button>
+                  <search v-model="searchValue"></search>
+                  <custom-button @click="setVisibleCart">Cart</custom-button>
                </div>
             </div>
          </div>
@@ -31,23 +28,11 @@
       <div class="container">
          <main>
             <div class="goods-list" v-if="filteredGoods.length">
-               <div class="goods-item" v-for="item in filteredGoods">
-                  <img src="images/macbook.png" alt="photo">
-                  <h3>{{ item.product_name }}</h3>
-                  <p>{{ item.price }}</p>
-               </div>
+               <good v-for="item in filteredGoods" :item="item"></good>
             </div>
             <span v-else>Нет данных</span>
          </main>
-         <div class="busketLayout" v-if="isVisibleCart">
-            <div class="busket">
-               <div class="busket_header">
-                  <h2 class="title"></h2>
-                  <i class="fa-solid fa-xmark" @click="setVisibleCart"></i>
-               </div>
-               <div class="busket_content"></div>
-            </div>
-         </div>
+         <busket @close="setVisibleCart" v-if="isVisibleCart"></busket>
       </div>
    </div>
 </body>

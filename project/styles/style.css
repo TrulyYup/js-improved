@@ -27,6 +27,15 @@ header .header_wrap {
   align-items: center;
 }
 
+@media (max-width: 667px) {
+  header .header_wrap {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    height: 120px;
+  }
+}
+
 header .header_wrap h1 {
   color: #f9f8f8;
   height: 30px;
@@ -138,8 +147,13 @@ span {
 }
 
 .busketLayout .busket_header i {
-  font-size: 30px;
-  fill: #000000;
+  font-size: 25px;
   cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.busketLayout .busket_header i:hover {
+  transition-duration: 0.5s;
+  color: #d63550;
 }
 /*# sourceMappingURL=style.css.map */
