@@ -1,5 +1,6 @@
-const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const API_URL_BASKET = `${API_URL}/getBasket.json`;
+const API_URL = 'http://localhost:8000';
+const API_CATALOG = `${API_URL}/goods.json`;
+const API_URL_BUSKET = `${API_URL}/busket`;
 
 function service(url) {
   return fetch(url).then((res) => res.json());
@@ -15,17 +16,33 @@ window.onload = () => {
   });
 
   Vue.component('busket', {
+    props: [
+      "item"
+    ],
+    data() {
+      return {
+        busketGoodsItem: []
+      }
+    },
     template: `
     <div class="busketLayout">
             <div class="busket">
                <div class="busket_header">
-                  <h2 class="title">My cart</h2>
+                  <h2 class="title">Cart</h2>
                   <i class="fas fa-thin fa-xmark" @click="$emit('close')"></i>
                </div>
-               <div class="busket_content"></div>
+               <div class="busket_content">
+               <busket-good v-for="item in busketGoodsItem" :item="item"></busket-good>
+               </div>
+               </div>
             </div>
          </div>
-    `
+    `,
+    mounted() {
+      service(API_URL_BUSKET).then((data) => {
+        this.busketGoodsItem = data
+      })
+    }
   });
 
   Vue.component('custom-button', {
@@ -43,7 +60,26 @@ window.onload = () => {
     <div class="goods-item">
     <img src="images/macbook.png" alt="photo">
     <h3>{{ item.product_name }}</h3>
-    <p>{{ item.price }}</p>
+    <p>{{ item.price }}$</p>
+    </div>`
+  });
+
+  Vue.component('busket-good', {
+    props: [
+      "item"
+    ],
+    template: `
+    <div class="busket-good">
+    <img src="images/macbook.png" alt="photo">
+    <div class="busket-good_disc">
+    <h3>{{ item.product_name }}</h3>
+    <p>{{ item.price }}$</p>
+    <div class="busket-amount">
+    <button>+</button>
+    <p>{{ item.amount }}</p>
+    <button>-</button>
+    </div>
+    </div>
     </div>`
   });
 
@@ -71,7 +107,7 @@ window.onload = () => {
       }
     },
     mounted() {
-      service(`${API_URL}/catalogData.json`).then((goods) => {
+      service(API_CATALOG).then((goods) => {
         this.goods = goods;
         return goods;
       });
