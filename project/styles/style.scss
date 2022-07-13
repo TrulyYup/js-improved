@@ -72,7 +72,6 @@ header {
                 align-self: center;
                 border: none;
                 font-size: 16px;
-                // line-height: 19px;
                 color: #f9f8f8;
                 padding: 14.5px 38.5px;
                 cursor: pointer;
@@ -83,13 +82,14 @@ header {
 
 .goods-list {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
 
     .goods-item {
         position: relative;
-        border: 3px solid black;
+        border-left: 10px solid #d63550;
+        border-bottom: 3px solid black;
         width: 200px;
         height: 300px;
 
@@ -136,13 +136,16 @@ span {
         width: 80%;
         height: 80%;
         background-color: white;
+        overflow: auto;
+        box-sizing: border-box;
+        scrollbar-width: none;
 
         &_header {
             box-sizing: border-box;
             height: 40px;
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            margin: 20px;
 
             i {
                 font-size: 25px;
@@ -153,6 +156,94 @@ span {
                     transition-duration: 0.5s;
                     color: #d63550;
 
+                }
+            }
+        }
+
+        .busket_content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+
+            .busket-good {
+                flex-grow: 1;
+                display: flex;
+                height: 200px;
+                margin-bottom: 35px;
+                box-shadow: 17px 19px 18px rgba(0, 0, 0, 0.13);
+                border-left: 10px solid #d63550;
+                ;
+
+                &:first-child {
+                    margin-right: 20px;
+                }
+
+                & img {
+                    height: inherit;
+                }
+
+                & .busket-good_disc {
+                    padding-left: 31px;
+                    padding-top: 50px;
+
+                    & h3 {
+                        font-size: 20px;
+                        line-height: 20px;
+                        color: #222222;
+                        margin-bottom: 20px;
+                    }
+
+                    & p {
+                        font-size: 16px;
+                        line-height: 26px;
+                        color: #575757;
+                    }
+
+                    .busket-amount {
+                        margin-top: 20px;
+                        color: #222222;
+                        display: flex;
+                        flex-direction: row;
+
+                        & p {
+                            width: 30px;
+                            text-align: center;
+                            background-color: white;
+                            color: #222222;
+
+                        }
+
+                        & button {
+                            background-color: rgba(0, 0, 0, 0.13);
+                            color: rgba(34, 34, 34, 0.785);
+                            width: 20px;
+                            text-align: center;
+                            border: none;
+                            transition-duration: 0.2s;
+
+                            &:first-child {
+                                border-top-left-radius: 50%;
+                                border-bottom-left-radius: 50%;
+
+                                &:hover {
+                                    color: white;
+                                    transition-duration: 0.5s;
+                                    background-color: #d63550;
+                                }
+                            }
+
+                            &:last-child {
+                                border-top-right-radius: 50%;
+                                border-bottom-right-radius: 50%;
+
+                                &:hover {
+                                    color: white;
+                                    transition-duration: 0.5s;
+                                    background-color: #d63550;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
