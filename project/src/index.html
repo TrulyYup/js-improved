@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>eShop</title>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+   <script src="https://kit.fontawesome.com/c1c8d8cc2a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+   <div id="root">
+      <header>
+         <div class="container">
+            <div class="header_wrap">
+               <h1>TrulyShop</h1>
+               <div class="header_right">
+                  <search v-model="searchValue"></search>
+                  <custom-button @click="setVisibleCart">Cart</custom-button>
+               </div>
+            </div>
+         </div>
+      </header>
+      <div class="container">
+         <main>
+            <div class="goods-list" v-if="filteredGoods.length">
+               <good v-for="item in filteredGoods" :item="item">
+               </good>
+            </div>
+            <span v-else>Нет данных</span>
+         </main>
+         <busket @close="setVisibleCart" v-if="isVisibleCart">
+         </busket>
+      </div>
+   </div>
+</body>
+
+</html>

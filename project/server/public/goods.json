@@ -1,21 +1,21 @@
 [
     {
-        "id_product": 1,
+        "id": "1",
         "price": 3600,
         "product_name": "MacBook"
     },
     {
-        "id_product": 2,
+        "id": "2",
         "price": 250,
         "product_name": "Magic Mouse"
     },
     {
-        "id_product": 3,
+        "id": "3",
         "price": 100,
         "product_name": "Case"
     },
     {
-        "id_product": 4,
+        "id": "4",
         "price": 500,
         "product_name": "Keyboard"
     }

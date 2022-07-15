@@ -37,10 +37,17 @@ header .header_wrap {
 }
 
 header .header_wrap h1 {
+  transition: 0.3s;
+  cursor: pointer;
   color: #f9f8f8;
   height: 30px;
   font-weight: bold;
   justify-self: start;
+}
+
+header .header_wrap h1:hover {
+  transition: 0.5s;
+  color: #d63550;
 }
 
 header .header_wrap .header_right {
@@ -71,7 +78,7 @@ header .header_wrap .header_right label button {
   padding: 14.5px 38.5px;
 }
 
-header .header_wrap .header_right .cart-button {
+header .header_wrap .header_right button {
   background-color: #d63550;
   align-self: center;
   border: none;
@@ -89,11 +96,27 @@ header .header_wrap .header_right .cart-button {
 }
 
 .goods-list .goods-item {
-  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  transition: 0.4s;
+  cursor: pointer;
   border-left: 10px solid #d63550;
-  border-bottom: 3px solid black;
+  border-bottom: 1px solid black;
   width: 200px;
   height: 300px;
+  box-sizing: border-box;
+}
+
+.goods-list .goods-item:hover {
+  transform: scale(1.03);
+  border-left: 10px solid black;
+  border-bottom: none;
+}
+
+.goods-list .goods-item:hover button {
+  visibility: visible;
+  opacity: 1;
 }
 
 .goods-list .goods-item img {
@@ -114,6 +137,21 @@ header .header_wrap .header_right .cart-button {
   font-weight: 300;
   font-size: 14px;
   color: #5D5D5D;
+}
+
+.goods-list .goods-item button {
+  width: 100%;
+  height: 40px;
+  background-color: #d63550;
+  border: none;
+  font-size: 14px;
+  font-weight: 300;
+  color: #f9f8f8;
+  cursor: pointer;
+  margin-top: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .1s, opacity 0.3s linear;
 }
 
 span {
@@ -143,11 +181,16 @@ span {
 }
 
 .busketLayout .busket_header {
+  position: sticky;
+  top: 0;
   box-sizing: border-box;
   height: 40px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin: 20px;
+  padding: 30px 20px;
+  background-color: white;
+  z-index: 1;
 }
 
 .busketLayout .busket_header i {
@@ -161,23 +204,33 @@ span {
   color: #d63550;
 }
 
+.busketLayout .busket span {
+  padding: 30px 20px;
+  font-size: 16px;
+  line-height: 26px;
+  color: #575757;
+}
+
 .busketLayout .busket .busket_content {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 20px;
+  gap: 20px;
 }
 
 .busketLayout .busket .busket_content .busket-good {
   flex-grow: 1;
   display: flex;
   height: 200px;
-  margin-bottom: 35px;
   box-shadow: 17px 19px 18px rgba(0, 0, 0, 0.13);
   border-left: 10px solid #d63550;
+  transition: 0.4s;
 }
 
-.busketLayout .busket .busket_content .busket-good:first-child {
-  margin-right: 20px;
+.busketLayout .busket .busket_content .busket-good:hover {
+  border-left: 10px solid black;
+  transition: 0.4s;
 }
 
 .busketLayout .busket .busket_content .busket-good img {
