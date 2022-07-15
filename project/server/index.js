@@ -16,35 +16,93 @@ const readBusket = () =>
         .then((busketFile) => {
             return JSON.parse(busketFile)
         });
+
 const readGoods = () =>
     readFile(GOODS, 'utf-8')
         .then((busketFile) => {
             return JSON.parse(busketFile)
         });
 
-app.get('/busket', (req, res) => {
-    // readBusket().then((busketList) => {
-    //     console.log(busketList);
-    // });
-    // readGoods().then((goodsList) => {
-    //     console.log(goodsList);
-    // })
-
-    Promise.all([
+function getReformBusket() {
+    return Promise.all([
         readBusket(),
         readGoods()
     ]).then(([busketList, goodsList]) => {
         return busketList.map((busketItem) => {
-            const goodsItem = goodsList.find(({ id_product: _goodsId }) => {
-                return _goodsId === busketItem.id_product;
+            const goodsItem = goodsList.find(({ id: _goodsId }) => {
+                return _goodsId === busketItem.id;
             });
             return {
                 ...busketItem,
                 ...goodsItem
             }
         })
-    }).then((result) => {
+    })
+    return result
+};
+
+app.get('/busket', (req, res) => {
+    getReformBusket().then((result) => {
         res.send(JSON.stringify(result))
+    })
+});
+
+app.post("/busket", (req, res) => {
+    readBusket().then((busket) => {
+        const busketItem = busket.find(({ id: _id }) => _id === req.body.id);
+        if (!busketItem) {
+            busket.push({
+                id: req.body.id,
+                amount: 1,
+            })
+        } else {
+            busket = busket.map((busketItem) => {
+                if (busketItem.id === req.body.id) {
+                    return {
+                        ...busketItem,
+                        amount: busketItem.amount + 1
+                    }
+                } else {
+                    return busketItem;
+                }
+            })
+        }
+        console.log(busket);
+
+        return writeFile(BUSKET, JSON.stringify(busket)).then(() => {
+            return getReformBusket()
+
+        }).then((result) => {
+            res.send(result)
+        })
+    })
+});
+
+app.delete("/busket", (req, res) => {
+    readBusket().then((busket) => {
+        const busketItem = busket.find(({ id: _id }) => _id === req.body.id);
+        if (busketItem.amount === 1) {
+            busket.splice(busket.indexOf(busketItem), 1)
+        } else {
+            busket = busket.map((busketItem) => {
+                if (busketItem.id === req.body.id) {
+                    return {
+                        ...busketItem,
+                        amount: busketItem.amount - 1
+                    }
+                } else {
+                    return busketItem;
+                }
+            })
+        }
+        console.log(busket);
+
+        return writeFile(BUSKET, JSON.stringify(busket)).then(() => {
+            return getReformBusket()
+
+        }).then((result) => {
+            res.send(result)
+        })
     })
 });
 
